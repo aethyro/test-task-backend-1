@@ -35,13 +35,16 @@ docker compose up
 Locust Test
 
 [SLI] Aggregate results
+
 Requests: 47093 | Failures: 0
+
 RPS: 259.90 | Success SLI: 100.00%
+
 Latency ms -> min 0.4 | avg 6.9 | max 252.3 | p10 1.0 | p90 16.0
 
-[[locust_test.png]]
+!(Графики)[locust_test.png]
 
-[[Locust.pdf]]
+!(Отчет)[Locust.pdf]
 
 ## Технологии
 
@@ -56,4 +59,4 @@ Latency ms -> min 0.4 | avg 6.9 | max 252.3 | p10 1.0 | p90 16.0
 
 -   PostgreSQL
 
-[[db_relations.png]]
+!(Связи)[db_relations.png]
