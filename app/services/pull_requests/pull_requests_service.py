@@ -1,10 +1,12 @@
-from datetime import datetime
 from uuid import UUID
 
+from app.models.pull_request_reviewers import PullRequestReviewer
 from app.models.pull_requests import PRStatus, PullRequest
 from app.models.team_members import TeamMember
-from app.models.pull_request_reviewers import PullRequestReviewer
 from app.models.users import User
+from app.services.pull_request_reviewers.pull_request_reviewers_service import (
+    PullRequestReviewerService,
+)
 from app.services.pull_requests.errors import (
     PullRequestAlreadyExistsError,
     PullRequestMergedError,
@@ -12,14 +14,11 @@ from app.services.pull_requests.errors import (
     ReplacementCandidateNotFoundError,
     ReviewerNotAssignedError,
 )
-from app.services.pull_request_reviewers.pull_request_reviewers_service import (
-    PullRequestReviewerService,
-)
 from app.services.pull_requests.schemas import (
     PullRequestCreate,
     PullRequestDto,
-    PullRequestShort,
     PullRequestReassign,
+    PullRequestShort,
 )
 from app.services.teams.errors import TeamNotFoundError
 from app.services.users.errors import UserNotFoundError
@@ -64,7 +63,6 @@ class PullRequestService:
 
         if pr.status != PRStatus.MERGED:
             pr.status = PRStatus.MERGED
-            pr.merged_at = pr.merged_at or datetime.utcnow()
             await pr.save()
 
         return pr
@@ -114,9 +112,6 @@ class PullRequestService:
     @staticmethod
     async def to_dto(pr: PullRequest) -> PullRequestDto:
         reviewer_map = await PullRequestService.get_reviewer_map([pr.id])
-        merged_at = pr.merged_at
-        if pr.status == PRStatus.MERGED and merged_at is None:
-            merged_at = pr.updated_at
         return PullRequestDto(
             pull_request_id=pr.id,
             pull_request_name=pr.title,
@@ -124,7 +119,6 @@ class PullRequestService:
             author_id=pr.author_id,
             assigned_reviewers=reviewer_map.get(pr.id, []),
             created_at=pr.created_at,
-            merged_at=merged_at,
         )
 
     @staticmethod
@@ -141,9 +135,6 @@ class PullRequestService:
                 author_id=pr.author_id,
                 assigned_reviewers=reviewer_map.get(pr.id, []),
                 created_at=pr.created_at,
-                merged_at=(
-                    pr.merged_at or (pr.updated_at if pr.status == PRStatus.MERGED else None)
-                ),
             )
             for pr in prs
         ]

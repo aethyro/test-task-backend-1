@@ -30,7 +30,6 @@ class PullRequestDto(BaseModel):
     status: PRStatus
     assigned_reviewers: list[UUID]
     created_at: datetime | None = Field(None, alias="createdAt")
-    merged_at: datetime | None = Field(None, alias="mergedAt")
 
     model_config = {
         "use_enum_values": True,

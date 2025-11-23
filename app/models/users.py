@@ -1,8 +1,9 @@
 from tortoise import fields
+
 from app.models.base import BaseModel
+from app.models.pull_request_reviewers import PullRequestReviewer
 from app.models.pull_requests import PullRequest
 from app.models.team_members import TeamMember
-from app.models.pull_request_reviewers import PullRequestReviewer
 
 
 class User(BaseModel):

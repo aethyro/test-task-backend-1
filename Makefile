@@ -1,17 +1,18 @@
-PYTHON ?= python
+.PHONY: run env
 
-.PHONY: run
-run:
-	uvicorn main:app --host 0.0.0.0 --port 8080
+run: env
+	@echo "Запуск приложения..."
+	docker compose up
 
-.PHONY: test
-test:
-	DB_DSN=sqlite://:memory: pytest -q
+env:
+	@if [ ! -f .env ]; then \
+		cp .env.example .env; \
+	fi
 
-.PHONY: load-test
-load-test:
-	$(PYTHON) tests/load_test.py --base-url http://localhost:8080 --concurrency 20 --duration 15
+test: env
+	@echo "Запуск тестов..."
+	python -m pytest tests
 
-.PHONY: locust
-locust:
-	locust -f tests/locustfile.py --host http://localhost:8080
+locust: env
+	@echo "Запуск нагрузочного теста..."
+	locust -f locustfile.py $(LOCUST_OPTS)

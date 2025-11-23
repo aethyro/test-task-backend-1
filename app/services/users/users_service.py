@@ -2,11 +2,10 @@ from uuid import UUID
 
 from tortoise.exceptions import IntegrityError
 
-from app.models.users import User
 from app.models.team_members import TeamMember
-from app.models.teams import Team
-from app.services.users.schemas import UserCreate, UserDto, UserSetIsActive
+from app.models.users import User
 from app.services.users.errors import UserAlreadyExistsError, UserNotFoundError
+from app.services.users.schemas import UserCreate, UserDto, UserSetIsActive
 
 
 class UserService:

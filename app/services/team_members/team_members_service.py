@@ -8,8 +8,8 @@ from app.services.teams.errors import (
     TeamMemberNotFoundError,
     TeamNotFoundError,
 )
-from app.services.users.errors import UserNotFoundError
 from app.services.teams.schemas import TeamMemberCreate
+from app.services.users.errors import UserNotFoundError
 
 
 class TeamMemberService:

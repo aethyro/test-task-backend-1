@@ -1,5 +1,7 @@
 from enum import Enum
+
 from tortoise import fields
+
 from app.models.base import BaseModel
 
 
@@ -18,7 +20,6 @@ class PullRequest(BaseModel):
 
     status = fields.CharEnumField(PRStatus, max_length=50, default=PRStatus.OPEN)
     title = fields.CharField(max_length=255)
-    merged_at = fields.DatetimeField(null=True)
 
     class Meta:
         table = "pull_requests"

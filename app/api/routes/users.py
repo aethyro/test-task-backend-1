@@ -12,7 +12,6 @@ from app.services.users.schemas import (
 )
 from app.services.users.users_service import UserService
 
-
 router = APIRouter(prefix="/users", tags=["Users"])
 
 
@@ -31,7 +30,7 @@ async def set_user_is_active(payload: UserSetIsActive) -> UserResponse:
     "/getReview",
     response_model=UserReviewsResponse,
     status_code=status.HTTP_200_OK,
-    summary="Получить PR'ы, где пользователь назначен ревьювером",
+    summary="Получить PR, где пользователь ревьювер",
 )
 async def get_user_reviews(
     user_id: UUID = Query(..., alias="user_id"),
@@ -66,7 +65,7 @@ async def get_user(user_id: UUID) -> UserDto:
 
 
 @router.get(
-    "/",
+    "",
     status_code=status.HTTP_200_OK,
     summary="Получить всех пользователей",
 )

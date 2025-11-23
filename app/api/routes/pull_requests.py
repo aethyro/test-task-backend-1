@@ -5,8 +5,8 @@ from app.services.pull_requests.schemas import (
     PullRequestCreate,
     PullRequestMerge,
     PullRequestReassign,
-    PullRequestResponse,
     PullRequestReassignResponse,
+    PullRequestResponse,
 )
 
 router = APIRouter(prefix="/pullRequest", tags=["PullRequests"])
